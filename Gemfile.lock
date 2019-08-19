@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    mqtt (0.5.0)
+    multipart-post (2.1.1)
+    spot-gps (0.2.7)
+      faraday (>= 0.8.9, < 0.16)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mqtt
+  spot-gps
+
+BUNDLED WITH
+   2.0.2
