@@ -8,10 +8,10 @@ SPOT.configure do |config|
   config.read_timeout = 80
 end
 
-sleep_time = ENV.fetch("SLEEP_TIME",50)
-feed_id = ENV.fetch("FEED_ID")#0qqfzqKZH786qf8ktUWmbSSCm9DkuqZak
-mqtt_uri = ENV.fetch("MQTT_URI","mqtt://broker")
-mqtt_topic =  ENV.fetch("MQTT_TOPIC","posizione_spot_gen")
+sleep_time = ENV.fetch("SLEEP_TIME", 50).to_i
+feed_id = ENV.fetch("FEED_ID") #0qqfzqKZH786qf8ktUWmbSSCm9DkuqZak
+mqtt_uri = ENV.fetch("MQTT_URI", "mqtt://broker")
+mqtt_topic = ENV.fetch("MQTT_TOPIC", "posizione_spot_gen")
 
 raise "NO FEED_ID ENV setted" if feed_id.nil?
 raise "NO MQTT_URI ENV setted" if mqtt_uri.nil?
@@ -47,7 +47,7 @@ loop do
       messages_to_write.each do |m|
         puts "Scrivo #{m.id}"
         logger.info "ID:#{m.id} - #{m.latitude} - #{m.longitude}"
-        client.publish(mqtt_topic, m.to_h.to_json, retain=false)
+        client.publish(mqtt_topic, m.to_h.to_json, retain = false)
         ultimo = m
       end
     end
