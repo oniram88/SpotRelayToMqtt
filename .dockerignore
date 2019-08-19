@@ -1,0 +1,9 @@
+posizione*.log
+.ruby-gemset
+.ruby-version
+docker-compose*
+Dockerfile
+.dockerignore
+.gitignore
+.git
+README.md
