@@ -9,6 +9,7 @@ SPOT.configure do |config|
 end
 
 sleep_time = ENV.fetch("SLEEP_TIME", 50).to_i
+sleep_send_time = ENV.fetch("SLEEP_SEND_TIME",0).to_i
 feed_id = ENV.fetch("FEED_ID") #0qqfzqKZH786qf8ktUWmbSSCm9DkuqZak
 mqtt_uri = ENV.fetch("MQTT_URI", "mqtt://broker")
 mqtt_topic = ENV.fetch("MQTT_TOPIC", "posizione_spot_gen")
@@ -44,11 +45,12 @@ loop do
     end
 
     unless messages_to_write.empty?
-      messages_to_write.each do |m|
+      messages_to_write.sort_by{|e| e.created_at}.each do |m|
         puts "Scrivo #{m.id}"
-        logger.info "ID:#{m.id} - #{m.latitude} - #{m.longitude}"
+        logger.info "ID:#{m.id} - #{m.latitude} - #{m.longitude} - #{m.created_at}"
         client.publish(mqtt_topic, m.to_h.to_json, retain = false)
         ultimo = m
+        sleep(sleep_send_time)
       end
     end
 
